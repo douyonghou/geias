@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gr.geias.mapper.DataFileMapper">
+    <resultMap id="BaseResultMap" type="com.gr.geias.entity.DataFile">
+        <constructor>
+            <idArg column="information_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="student_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="gender" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="college_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="specialty_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="class_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="area_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="unit_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="employment_way_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="salary" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="msg" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
+    <select id="collegDataFile" parameterType="string" resultType="int">
+        select college_id from tb_college
+        <where>
+            <if test="college_id!=null">
+                and college_name = #{college_id}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+    <!--    专业-->
+    <select id="specialaltyDataFile" resultType="int">
+        select specialty_id from tb_specialty
+        <where>
+            <if test="specialty_id!=null">
+                and specialty_name = #{specialty_id}
+            </if>
+            <if test="college_id!=null">
+                and college_id = #{college_id}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+    <!-- 班级-->
+    <select id="classDataFile" resultType="int">
+        select class_id from tb_class_grade
+        <where>
+            <if test="class_id!=null">
+                and class_name = #{class_id}
+            </if>
+            <if test="specialty_id!=null">
+                and specialty_id = #{specialty_id}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+
+
+
+<!--    <insert id="addDataFileccc" parameterType="com.gr.geias.entity.DataFile" useGeneratedKeys="true"-->
+<!--            keyProperty="information_id" keyColumn="information_id">-->
+<!--        insert into tb_employment_information-->
+<!--        (-->
+<!--&lt;!&ndash;        information_id,&ndash;&gt;-->
+<!--        student_num,-->
+<!--        name,-->
+<!--        gender,-->
+<!--        college_id,-->
+<!--        specialty_id,-->
+<!--        class_id,-->
+<!--        area_id,-->
+<!--        unit_id,-->
+<!--        employment_way_id",-->
+<!--        salary-->
+<!--&lt;!&ndash;        create_time,&ndash;&gt;-->
+<!--&lt;!&ndash;        msg&ndash;&gt;-->
+<!--        )-->
+<!--        values-->
+<!--        (-->
+<!--&lt;!&ndash;        #{sysDataFile.information_id},&ndash;&gt;-->
+<!--        #{sysDataFile.student_num},-->
+<!--        #{sysDataFile.name},-->
+<!--        #{sysDataFile.gender},-->
+<!--        #{sysDataFile.college_id},-->
+<!--        #{sysDataFile.specialty_id},-->
+<!--        #{sysDataFile.class_id},-->
+<!--        #{sysDataFile.area_id},-->
+<!--        #{sysDataFile.unit_id},-->
+<!--        #{sysDataFile.employment_way_id"},-->
+<!--        #{sysDataFile.salary}-->
+<!--&lt;!&ndash;        #{sysDataFile.create_time},&ndash;&gt;-->
+<!--&lt;!&ndash;        #{sysDataFile.msg}&ndash;&gt;-->
+<!--        )-->
+<!--    </insert>-->
+
+    <insert id="addDataFile" parameterType="com.gr.geias.entity.DataFile" useGeneratedKeys="true"
+            keyProperty="information_id" keyColumn="information_id">
+<!--        insert into tb_employment_information(class_name,specialty_id,create_time,admin_id) values(#{classGrede.className},#{classGrede.specialtyId},#{classGrede.createTime},#{classGrede.adminId})-->
+        INSERT INTO tb_employment_information (student_num, name, class_id, area_id, unit_id, salary, employment_way_id, msg, create_time, gender, college_id, specialty_id) VALUES(99, #{sysDataFile.name}, #{sysDataFile.class_id}, #{sysDataFile.area_id}, #{sysDataFile.unit_id},  #{sysDataFile.salary}, #{sysDataFile.employment_way_id}, NULL, NULL, #{sysDataFile.gender}, #{sysDataFile.college_id}, #{sysDataFile.specialty_id});
+
+    </insert>
+
+</mapper>
